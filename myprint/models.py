@@ -78,13 +78,18 @@ class InfoProduct(models.Model):
 
 
 class Category(models.Model):
+    parent = models.ForeignKey("Category", on_delete=models.CASCADE, null=True, blank=True, default=None)
     name_uz = models.CharField(_('name'), max_length=65)
     name_ru = models.CharField(_('name'), max_length=65)
-    parent_id = models.ForeignKey("Category", on_delete=models.RESTRICT, null=True, default=None)
-    image = models.ImageField(_('image'), upload_to='media/category_image')
+    image = models.ImageField(_('image'), upload_to='media/category_image', blank=True, null=True)
+
+
+    @property
+    def children(self):
+        return Category.objects.filter(parent=self).all()
 
     def __str__(self):
-        return f"{self.name_uz} {self.name_ru}"
+        return self.name_uz
 
     class Meta:
         verbose_name = "Kategoriya"
@@ -106,7 +111,7 @@ class Product(models.Model):
 
     class Meta:
         verbose_name = "Maxsulot"
-        verbose_name_plural = "MAxsulotlar"
+        verbose_name_plural = "Maxsulotlar"
 
 
 class Product_Orders(models.Model):
@@ -279,27 +284,27 @@ class Order(models.Model):
         ('шт', 'шт'),
         ('усл', 'усл'),
     )
-    name = models.CharField(max_length=65, blank=True, null=True)
+    name = models.CharField(max_length=65)
     status_order = models.CharField(max_length=20, choices=Product_Status, default='шт', null=True, blank=True)
-    amount = models.IntegerField(blank=True, null=True)
-    price = models.PositiveIntegerField(blank=True, null=True)
-    price_free_VAT = models.PositiveIntegerField(blank=True, null=True)
-    VAT = models.FloatField(blank=True, null=True)
-    price_with_VAT = models.PositiveIntegerField(blank=True, null=True)
-    total = models.PositiveIntegerField(blank=True, null=True)
-    total_price_with_VAT = models.PositiveIntegerField(blank=True, null=True)
-    total_price_ALL = models.PositiveIntegerField(blank=True, null=True)
+    amount = models.IntegerField()
+    price = models.IntegerField()
+    price_free_VAT = models.FloatField()
+    VAT = models.FloatField()
+    price_with_VAT = models.FloatField()
+    total = models.FloatField()
+    total_price_with_VAT = models.FloatField()
+    total_price_ALL = models.FloatField()
     order = models.ForeignKey(UserOrder, verbose_name='Zakazlar', related_name="orderform", on_delete=models.CASCADE, blank=True, null=True)
 
-    @property
-    def total_sum(self):
-        summ = self.price * self.amount
-        return summ
-
-    @property
-    def total_sum_wit_nds(self):
-        total_summ_with_nds = (self.total_sum) / 100 * self.VAT + self.total_sum
-        return total_summ_with_nds
+    # @property
+    # def total_sum(self):
+    #     summ = self.price * self.amount
+    #     return summ
+    #
+    # @property
+    # def total_sum_wit_nds(self):
+    #     total_summ_with_nds = (self.total_sum) / 100 * self.VAT + self.total_sum
+    #     return total_summ_with_nds
 
 
     def __str__(self) -> str:

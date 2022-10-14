@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load crispy_forms_tags %}
+
 
 {% block content %}
     <form method="POST">
@@ -75,10 +75,6 @@
 
                             </td>
                             <td>
-                                <input name="form_data.price_free_VAT" type="number" class="form-control">
-
-                            </td>
-                            <td>
                                 <input name="form_data.VAT" type="number" class="form-control">
 
                             </td>
@@ -103,9 +99,8 @@
                     </td>
                 </tr>
             </table>
+         {{ formset.management_form }}
         </div>
-
-        {{ formset.management_form }}
 
         <button type="submit">Saqlash</button>
     </form>

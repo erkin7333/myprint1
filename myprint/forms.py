@@ -17,9 +17,9 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = [
             'name', 'status_order', 'amount',
-            'price', 'price_with_VAT', 'VAT',
-            'price_free_VAT', 'total'
+            'price', 'VAT',
         ]
+
 
 
 

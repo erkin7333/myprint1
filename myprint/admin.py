@@ -22,6 +22,9 @@ admin.site.register(SocialMedia)
 
 class OrderAdmin(admin.TabularInline):
     model = Order
+    fields = [
+        'name', 'amount'
+    ]
 
 
 class UserOrderAdmin(admin.ModelAdmin):
@@ -34,10 +37,13 @@ admin.site.register(Order)
 
 class CategoryAdmin(admin.ModelAdmin):
     fields = [
-        'parent_id', 'name_uz', 'name_ru', 'image'
+        'parent', 'name_uz', 'name_ru', 'image'
     ]
     list_display = [
-        'id', 'parent_id', 'name_uz', 'name_ru', 'image'
+        'id', 'parent', 'name_uz', 'name_ru', 'image'
+    ]
+    list_display_links = [
+        'parent', 'name_uz', 'name_ru',
     ]
     class Meta:
         model = Category
