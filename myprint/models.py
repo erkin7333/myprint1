@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from datetime import datetime
 
 
 class MyUserManager(BaseUserManager):
@@ -86,7 +87,7 @@ class Category(models.Model):
 
     @property
     def children(self):
-        return Category.objects.filter(parent=self).all()
+        return Category.objects.filter(parent=self)
 
     def __str__(self):
         return self.name_uz
@@ -134,6 +135,25 @@ class Settings(models.Model):
         verbose_name = "Sozlama"
         verbose_name_plural = "Sozlamalar"
 
+
+#  About model
+class About(models.Model):
+    description_uz = models.TextField(blank=True, null=True)
+    description_ru = models.TextField(blank=True, null=True)
+    def __str__(self):
+        return self.description_uz
+
+    class Meta:
+        verbose_name = "Biz Haqimizda"
+
+# About uchun rasmlar turadigan model
+class AboutImage(models.Model):
+    name_uz = models.CharField(max_length=60, blank=True, null=True)
+    name_ru = models.CharField(max_length=60, blank=True, null=True)
+    image = models.ImageField(upload_to='media/about', blank=True, null=True)
+    def __str__(self):
+        return self.name_uz
+
 # печать.
 class Printer(models.Model):
     name_uz = models.CharField(_('name'), max_length=65)
@@ -145,35 +165,66 @@ class Printer(models.Model):
     def __str__(self):
         return self.name_uz
 
-
-class InfoType(models.Model):
-    size = models.CharField(_('size'), max_length=65)
-    type_paper = models.CharField(_('type_paper'), max_length=65)
-    one_site_print = models.CharField(_('one_site_print'), max_length=65)
-    double_site_print = models.CharField(_('double_site_print'), max_length=65)
-
-    def __str__(self) -> str:
-        return self.size
-
-
 # Размер бумага 	Тип бумага 	Односторонняя печать (4+0) 	Двухсторонняя печать (4+4)
 
 class Type(models.Model):
     name_uz = models.CharField(_('name'), max_length=65)
     name_ru = models.CharField(_('name'), max_length=65)
-    infotype = models.ForeignKey(InfoType, on_delete=models.CASCADE, related_name="types", blank=True, null=True)
-
     def __str__(self) -> str:
         return self.name_uz
+
+    class Meta:
+        verbose_name = "Xizmat ko'rsatish turlari"
+
+class Image(models.Model):
+    type_sevice = models.ForeignKey(Type, on_delete=models.SET_NULL, blank=True, null=True)
+    image = models.ImageField(upload_to='media/service', blank=True, null=True)
+
+    def __str__(self):
+        return str(self.type_sevice)
+
+    class Meta:
+        verbose_name = "Rasm"
+        verbose_name_plural = "Rasmlar"
+
+# Xizmat ko'rsatish zakazlari
+class Type_Services(models.Model):
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="types", blank=True, null=True)
+    shiroki_size = models.CharField(verbose_name="shiroki_size", max_length=65, null=True, blank=True, default=None)
+    shiroki_name = models.CharField(verbose_name="shiroki_name", max_length=65, null=True, blank=True, default=None)
+    shiroki_price = models.CharField(verbose_name='shiroki_price', max_length=65, null=True, blank=True, default=None)
+    tekstil_size = models.CharField(verbose_name='tekstil_size', max_length=65, null=True, blank=True, default=None)
+    tekstil_price = models.CharField(verbose_name='tekstil_price', max_length=65, null=True, blank=True, default=None)
+    lazer_size = models.CharField(verbose_name='lazer_size', max_length=65, null=True, blank=True, default=None)
+    lazer_price = models.CharField(verbose_name='lazer_price', max_length=65, null=True, blank=True, default=None)
+    type_paper = models.CharField(verbose_name="qog'oz_turi", max_length=65, null=True, blank=True)
+    size = models.CharField(verbose_name="razmeri", max_length=65, null=True, blank=True, default=None)
+    one_site_print = models.CharField(verbose_name='bir tomonlama chop etish', max_length=65, null=True, blank=True)
+    double_site_print = models.CharField(verbose_name='ikki tomonlama chop etish', max_length=65, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    image1 = models.ImageField(upload_to='media/service', blank=True, null=True)
+    image2 = models.ImageField(upload_to='media/service', blank=True, null=True)
+    image3 = models.ImageField(upload_to='media/service', blank=True, null=True)
+
+
+    # def __str__(self) -> str:
+    #     return self.
+    class Meta:
+        verbose_name = "Bizning xizmatlar"
+
+
 
 
 # Reklama , Poligrafia, Suviner
 class TypeService(models.Model):
     name_uz = models.CharField(_('name'), max_length=65)
     name_ru = models.CharField(_('name'), max_length=65)
+    image = models.ImageField(upload_to="media/typeserveis")
 
     def __str__(self) -> str:
         return self.name_uz
+    class Meta:
+        verbose_name = "Xizmat turi"
 
 
 class MenuService(models.Model):
@@ -184,6 +235,9 @@ class MenuService(models.Model):
 
     def __str__(self) -> str:
         return self.name_uz
+
+    class Meta:
+        verbose_name = "Menyu Xizmati"
 
 
 # Mы предлагаем
@@ -267,7 +321,7 @@ class UserOrder(models.Model):
     name_client = models.CharField(max_length=65)
     client_phone_number = models.CharField(max_length=65)
     manager_name = models.CharField(max_length=65)
-    date_order = models.DateTimeField(blank=True, null=True)
+    date_order = models.DateTimeField(auto_now_add=True)
     ready_product_date_order = models.DateTimeField(blank=True, null=True)
 
     def __str__(self) -> str:
@@ -286,27 +340,15 @@ class Order(models.Model):
     )
     name = models.CharField(max_length=65)
     status_order = models.CharField(max_length=20, choices=Product_Status, default='шт', null=True, blank=True)
-    amount = models.IntegerField()
-    price = models.IntegerField()
-    price_free_VAT = models.FloatField()
-    VAT = models.FloatField()
-    price_with_VAT = models.FloatField()
-    total = models.FloatField()
-    total_price_with_VAT = models.FloatField()
-    total_price_ALL = models.FloatField()
+    amount = models.IntegerField(null=True)
+    price = models.IntegerField(null=True)
+    price_free_VAT = models.FloatField(null=True)
+    VAT = models.FloatField(null=True)
+    price_with_VAT = models.FloatField(null=True)
+    total = models.FloatField(null=True)
+    total_price_with_VAT = models.FloatField(null=True)
+    total_price_ALL = models.FloatField(null=True)
     order = models.ForeignKey(UserOrder, verbose_name='Zakazlar', related_name="orderform", on_delete=models.CASCADE, blank=True, null=True)
-
-    # @property
-    # def total_sum(self):
-    #     summ = self.price * self.amount
-    #     return summ
-    #
-    # @property
-    # def total_sum_wit_nds(self):
-    #     total_summ_with_nds = (self.total_sum) / 100 * self.VAT + self.total_sum
-    #     return total_summ_with_nds
-
-
     def __str__(self) -> str:
         return str(self.name)
 
@@ -314,3 +356,15 @@ class Order(models.Model):
         db_table = "orderform"
         verbose_name = "Zakaz"
         verbose_name_plural = "Zakazlar"
+
+
+class OrderService(models.Model):
+    order_type = models.ForeignKey(Type, on_delete=models.CASCADE, blank=True, null=True)
+    username = models.CharField(_('full_name'), max_length=65)
+    phone_number = models.CharField(_('phone_number'), max_length=15)
+    creat_add = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.username
+    class Meta:
+        verbose_name = "Xizmat ko'rsatish zakazlari"

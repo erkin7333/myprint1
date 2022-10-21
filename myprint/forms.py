@@ -1,16 +1,7 @@
 from django import forms
-from .models import Order, UserOrder
+from .models import Order, UserOrder, OrderService
 from django.forms import inlineformset_factory
 
-
-class UserOrderForm(forms.ModelForm):
-    class Meta:
-        model = UserOrder
-        fields = [
-            'id_name_order', 'name_client',
-            'manager_name', 'date_order',
-            'ready_product_date_order', 'client_phone_number'
-        ]
 
 class OrderForm(forms.ModelForm):
     class Meta:
@@ -21,6 +12,12 @@ class OrderForm(forms.ModelForm):
         ]
 
 
+class UserOrderForm(forms.ModelForm):
+    # orders = forms.MultiValueField(fields=(), widget=OrderForm)
+
+    class Meta:
+        model = UserOrder
+        fields = "__all__"
 
 
 class OrderModelForm(forms.ModelForm):
@@ -28,10 +25,10 @@ class OrderModelForm(forms.ModelForm):
         model = Order
         fields = (
             "id", "name", "status_order",
-            "amount", "price", "price_free_VAT",
-            "VAT", "price_with_VAT", "total",
-            "total_price_with_VAT", "total_price_ALL"
+            "amount", "price",
+            "VAT"
         )
+
 
 OrderFormSet = inlineformset_factory(
     UserOrder,
@@ -42,3 +39,25 @@ OrderFormSet = inlineformset_factory(
     extra=0
 )
 
+
+class OrderServiceForm(forms.ModelForm):
+    class Meta:
+        model = OrderService
+        exclude = ['creat_add']
+
+        widgets = {
+            'order_type': forms.Select(attrs={
+                'class': 'custom-select',
+
+            }),
+            'username': forms.TextInput(attrs={
+                'class': 'form-control mt-4',
+                'placeholder': 'Имя...'
+            }),
+            'phone_number': forms.NumberInput(attrs={
+                'class': 'form-control mt-3',
+                'maxlength': '13',
+                'placeholder': 'Телефон...',
+                'value': '+998'
+            })
+        }

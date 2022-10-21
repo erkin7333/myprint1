@@ -76,19 +76,19 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 text-center">
                     <div class="right-content">
                         <ul class="list-main pt-3">
-                            <li class="pr-1 pb-2 border-0"><a href="https://www.facebook.com/myprintreklama/"><img
+                            <li class="pr-1 pb-2 border-0"><a href="{{ facebook }}"><img
                                     src="{% static 'img/icons/facebook.png' %}" width="30" height="30" alt=""></a></li>
-                            <li class="pl-1 pr-1 pb-2 border-0"><a href="https://t.me/MYPRINTUZ"><img
+                            <li class="pl-1 pr-1 pb-2 border-0"><a href="{{ telegram }}"><img
                                     src="{% static 'img/icons/telegramBlack.png' %}" width="30" height="30" alt=""></a>
                             </li>
-                            <li class="pl-1 pr-1 pb-2 border-0"><a href="https://www.instagram.com/myprintuz/"><img
+                            <li class="pl-1 pr-1 pb-2 border-0"><a href="{{ instagram }}"><img
                                     src="{% static 'img/icons/instagramBlack.png' %}" width="30" height="30" alt=""></a>
                             </li>
-                            <li class="pl-1 pr-1 pb-1 mb-0 border-0 font-weight-normal"><a href="tel:+998555001505"
+                            <li class="pl-1 pr-1 pb-1 mb-0 border-0 font-weight-normal"><a href="tel:{{ phone }}"
                                                                                            class="pb-0 pt-3 mb-0 font-weight-normal"
                                                                                            style="font-size: 25px;"><img
                                     src="{% static 'img/icons/phonesvg.svg' %}" width="25" class="mr-2 ml-2" height="30"
-                                    alt="">+998 (55) <span style="font-size: 25px; font-weight: bold;">500-15-05</span></a>
+                                    alt="">{{ phone }}</a>
                             </li>
 
                         </ul>
@@ -106,30 +106,22 @@
                         <div class="navbar-collapse">
                             <div class="nav-inner">
                                 <ul class="nav menu navbar-nav">
-                                    <li class="active"><a href="{% url 'myprint:home' %}">ГЛАВНАЯ</a></li>
-                                    <li><a href="{% url 'myprint:advertisement' %}" class="text-uppercase">О
-                                        компании</a></li>
+                                    <li class="active"><a href="{% url 'myprint:printing_large' %}">ГЛАВНАЯ</a></li>
+                                    <li><a href="{% url 'myprint:about_page' %}" class="text-uppercase">Kompaniya
+                                        haqida</a></li>
                                     <li><a href="#!">УСЛУГИ</a>
                                         <ul class="dropdown">
-                                            <li style="list-style-type: none;"><a href="{% url 'myprint:design' %}">Дизайн</a>
+                                            {% for col in servicecategory %}
+                                            <li style="list-style-type: none;"><a href="{% url 'myprint:type_service' col.pk %}">{{ col.name_uz }}</a>
                                             </li>
-                                            <li style="list-style-type: none;"><a
-                                                    href="{% url 'myprint:printing_paper' %}">Цифровая печать</a></li>
-                                            <li style="list-style-type: none;"><a
-                                                    href="{% url 'myprint:printing_large' %}">Широкоформатная печать</a>
-                                            </li>
-                                            <li style="list-style-type: none;"><a
-                                                    href="{% url 'myprint:printing_textile' %}">Текстильная печать</a>
-                                            </li>
-                                            <li style="list-style-type: none;"><a href="{% url 'myprint:markirovka' %}">Лазерная
-                                                маркировка</a></li>
+                                            {% endfor%}
                                         </ul>
                                     </li>
                                     <li><a href="#!">ПРОДУКЦИЯ</a>
                                         <ul class="dropdown">
                                             <li style="list-style-type: none;">
                                                 {% for row in allcategory %}
-                                                <a href="{% url 'myprint:poligraphy_product' row.pk %}">{{ row.name_uz }}</a>
+                                                    <a href="{% url 'myprint:poligraphy_product' row.pk %}">{{ row.name_uz }}</a>
                                                 {% endfor %}
                                             </li>
                                         </ul>
