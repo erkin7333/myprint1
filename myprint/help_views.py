@@ -5,6 +5,7 @@ from .forms import OrderServiceForm
 
 def service_type(request, pk):
     service = Type_Services.objects.filter(type_id=pk)
+    print("Maxsulotlar--------------->>>>>>>>>>>", service)
     image = Image.objects.filter(type_sevice_id=pk)
     form = OrderServiceForm()
     if request.method == 'POST':

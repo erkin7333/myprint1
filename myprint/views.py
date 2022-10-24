@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import *
 from .models import UserOrder, Order
-from .forms import UserOrderForm, OrderForm
+from .forms import UserOrderForm, OrderForm, OrderServiceForm
 from django.shortcuts import redirect
 from django.forms import modelformset_factory
 from django.db import transaction, IntegrityError
@@ -49,10 +49,16 @@ def create_order(request):
 def home(request):
     servistype = TypeService.objects.all()
     menuservice = MenuService.objects.all()
-    print("Menyu------------>>>>>>>>", menuservice)
+    form = OrderServiceForm()
+    if request.method == 'POST':
+        form = OrderServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
     context = {
+        'form': form,
         "servistype": servistype,
-        "menuservice": menuservice
+        "menuservice": menuservice,
     }
     return render(request, 'main/index.html', context=context)
 
@@ -75,17 +81,6 @@ def portfolio(request):
 
 def gift_product(request):
     return render(request, 'main/gifts-products.html')
-
-
-def service_type(request, pk):
-    service = Type_Services.objects.filter(type_id=pk)
-    image = Image.objects.filter(type_sevice_id=pk)
-    context = {
-        'service': service,
-        'pk': pk,
-        'image': image
-    }
-    return render(request, 'main/service_type.html', context=context)
 
 
 def printing_large(request):

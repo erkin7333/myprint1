@@ -208,7 +208,8 @@ class Type_Services(models.Model):
 
 
     # def __str__(self) -> str:
-    #     return self.
+    #     return self.one_site_print
+
     class Meta:
         verbose_name = "Bizning xizmatlar"
 
