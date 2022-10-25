@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from .help_model import Designe
+from .help_model import Designe, Image, DigitalPrint, LargeFormat, TextPrint, LaserPrint
 from .forms import OrderServiceForm
 
 
@@ -21,26 +21,79 @@ from .forms import OrderServiceForm
 #     return render(request, 'main/service_type.html', context=context)
 
 
-
 def designe(request):
     desig = Designe.objects.filter()
+    image = Image.objects.filter()
     context = {
-        'desig': desig
+        'desig': desig,
+        'image': image
     }
     return render(request, 'main/dizayn.html', context=context)
+
+
 def printing_paper(request):
-    return render(request, 'main/printing-paper.html')
+    digitalprint = DigitalPrint.objects.filter()
+    form = OrderServiceForm()
+    if request.method == 'POST':
+        form = OrderServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    context = {
+        'digitalprint': digitalprint,
+        'form': form
+    }
+    return render(request, 'main/printing-paper.html', context=context)
 
 
 def printing_large(request):
-    return render(request, 'main/printing-largeformat.html')
+    largeformat = LargeFormat.objects.filter()
+    form = OrderServiceForm()
+    if request.method == 'POST':
+        form = OrderServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    contenxt = {
+        'largeformat': largeformat,
+        'form': form
+    }
+    return render(request, 'main/printing-largeformat.html', context=contenxt)
+
 
 def printing_textile(request):
-    return render(request, 'main/printing-textile.html')
+    textprint = TextPrint.objects.filter()
+    form = OrderServiceForm()
+    if request.method == 'POST':
+        form = OrderServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    context = {
+        'textprint': textprint,
+        'form': form
+    }
+    return render(request, 'main/printing-textile.html', context=context)
+
+
+def markirovka(request):
+    laserprint = LaserPrint.objects.filter()
+    form = OrderServiceForm()
+    if request.method == 'POST':
+        form = OrderServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    context = {
+        'laserprint': laserprint,
+        'form': form
+    }
+    return render(request, 'main/markirovka.html', context=context)
 
 
 def textile_products(request):
     return render(request, 'main/textile-products.html')
 
-def markirovka(request):
-    return render(request, 'main/markirovka.html')
+
+def portfoli(request):
+    return render(request, 'main/portfolio.html')

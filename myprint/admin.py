@@ -170,10 +170,10 @@ admin.site.register(Image, ImageAdmin)
 
 class DesigneAdmin(admin.ModelAdmin):
     list_display = [
-        'name', 'slug', 'description',
+        'description',
         'image1', 'image2', 'image3'
     ]
-    list_display_links = ['name']
+    list_display_links = ['description']
 
     class Meta:
         model = Designe
@@ -183,10 +183,10 @@ admin.site.register(Designe, DesigneAdmin)
 
 class DigitalPrintAdmin(admin.ModelAdmin):
     list_display = [
-        'name', 'slug', 'description', 'size',
+        'description', 'size',
         'type', 'on_site_print', 'double_site_print', 'image'
     ]
-    list_display_links = ['name']
+    list_display_links = ['size', 'type']
 
     class Meta:
         model = DigitalPrint
@@ -196,10 +196,10 @@ admin.site.register(DigitalPrint, DigitalPrintAdmin)
 
 class LargeFormatAdmin(admin.ModelAdmin):
     list_display = [
-        'name', 'slug', 'description', 'product_name',
+       'description', 'product_name',
         'type', 'price', 'image1', 'image2', 'image3'
     ]
-    list_display_links = ['name']
+    list_display_links = ['product_name']
 
     class Meta:
         model = LargeFormat
@@ -208,10 +208,10 @@ admin.site.register(LargeFormat, LargeFormatAdmin)
 
 class TextPrintAdmin(admin.ModelAdmin):
     list_display = [
-        'name', 'slug', 'size', 'price',
+        'size', 'price',
         'description', 'image'
     ]
-    list_display_links = ['name']
+    list_display_links = ['size', 'price']
 
     class Meta:
         model = TextPrint
@@ -220,10 +220,10 @@ admin.site.register(TextPrint, TextPrintAdmin)
 
 class LaserPrintAdmin(admin.ModelAdmin):
     list_display = [
-        'name', 'slug', 'size', 'price',
+        'size', 'price',
         'description', 'image'
     ]
-    list_display_links = ['name']
+    list_display_links = ['size', 'price']
 
     class Meta:
         model = LaserPrint
