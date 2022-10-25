@@ -31,7 +31,7 @@ urlpatterns = [
 
     path('about-page/', aboutview, name='about_page'),
 
-    path('service/', servicecategory, name="service_page"),
+    path('service/<int:pk>/', servicecategory, name="service_page"),
 
     path('invoice/', invoice, name='invoice'),
 
@@ -39,5 +39,7 @@ urlpatterns = [
 
     path('create/', create, name='create'),
 
-    path('list/', list_data, name='list')
+    path('list/', list_data, name='list'),
+
+    path('typeimage/<int:pk>/', typeimage, name='typeimage')
 ]

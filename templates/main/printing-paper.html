@@ -26,14 +26,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    {% for col in digitalprint %}
+                {% for col in digitalprint %}
+                    <tr>
                         <td scope="row" data-label="Размер бумага">{{ col.size }}</td>
                         <td data-label="Тип бумага">{{ col.type }}</td>
                         <td data-label="Односторонняя печать (4+0)">{{ col.on_site_print }}</td>
                         <td data-label="Двухсторонняя печать (4+4)">{{ col.double_site_print }}</td>
-                    {% endfor %}
-                </tr>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>

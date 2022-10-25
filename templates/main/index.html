@@ -25,7 +25,7 @@
                                     <img src="{{ service.image.url }}" width="95%" height="220"
                                          class="m-auto">
                                     <a class="pt-3 text-dark"
-                                       href="{% url 'myprint:service_page' %}">{{ service.name_uz }}</a>
+                                       href="{% url 'myprint:service_page' service.pk %}">{{ service.name_uz }}</a>
                                 </div>
                             </a>
                         </li>

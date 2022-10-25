@@ -20,13 +20,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            {% for col in textprint %}
+                        {% for col in textprint %}
+                            <tr>
                                 <td scope="row" data-label="Размер">{{ col.size }}</td>
                                 <td data-label="Цена">{{ col.price }}</td>
-                            {% endfor %}
-                        </tr>
-
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -48,7 +47,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel"></h5>
                         <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">
-                           Yopish
+                            Yopish
                         </button>
                     </div>
                     <form action="" method="POST">

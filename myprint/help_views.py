@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from .help_model import Designe, Image, DigitalPrint, LargeFormat, TextPrint, LaserPrint
 from .forms import OrderServiceForm
+from django.core.paginator import Paginator
 
 
 # def service_type(request, pk):
@@ -26,7 +27,6 @@ def designe(request):
     image = Image.objects.filter()
     context = {
         'desig': desig,
-        'image': image
     }
     return render(request, 'main/dizayn.html', context=context)
 
@@ -95,5 +95,20 @@ def textile_products(request):
     return render(request, 'main/textile-products.html')
 
 
-def portfoli(request):
-    return render(request, 'main/portfolio.html')
+def portfolio(request):
+    image = Image.objects.all()
+    paginator = Paginator(image, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj
+    }
+    return render(request, 'main/portfolio.html', context=context)
+
+
+def typeimage(request, pk):
+    t_image = Image.objects.filter(type_sevice_id=pk)
+    context = {
+        't_image': t_image
+    }
+    return render(request, 'main/reklamaimage.html', context=context)

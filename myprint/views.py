@@ -4,6 +4,7 @@ from .models import UserOrder, Order
 from .forms import UserOrderForm, OrderForm, OrderServiceForm
 from django.shortcuts import redirect
 from django.forms import modelformset_factory
+from django.core.paginator import Paginator
 from django.db import transaction, IntegrityError
 
 
@@ -63,20 +64,19 @@ def home(request):
     return render(request, 'main/index.html', context=context)
 
 
-def servicecategory(request):
-    page_service = MenuService.objects.all()
+def servicecategory(request, pk):
+    page_service = MenuService.objects.filter(type_service_id=pk)
+    paginator = Paginator(page_service, 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        "page_service": page_service
+        "page_obj": page_obj
     }
     return render(request, 'main/service_page.html', context=context)
 
 
 def contact(request):
     return render(request, 'main/contact.html')
-
-
-def portfolio(request):
-    return render(request, 'main/portfolio.html')
 
 
 def gift_product(request):

@@ -3,17 +3,34 @@
 
 
 {% block content %}
-    <div class="container">
+    <div class="container mt-5">
         <div class="row row-cols-1 row-cols-md-3">
-            <div class="col mb-4">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
+            {% for row in page_obj %}
+                <div class="col mb-4">
+                    <div class="card">
+                        <img src="{{ row.image.url }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ row.name_uz }}</h5>
+                        </div>
                     </div>
                 </div>
+            {% endfor %}
+        </div>
+        <div class="row justify-content-center pt-2 pb-2">
+            <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}">««</a>
+                        {% endif %}
+
+                        <span class="current">
+                             {{ page_obj.number }} - sahifa {{ page_obj.paginator.num_pages }}.
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">»»</a>
+                        {% endif %}
+                    </span>
             </div>
         </div>
     </div>
