@@ -1,4 +1,5 @@
-from myprint.models import Category, Settings, Type
+from myprint.models import Category, Settings
+from myprint.help_model import Type
 
 
 

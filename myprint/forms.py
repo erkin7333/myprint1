@@ -1,5 +1,6 @@
 from django import forms
-from .models import Order, UserOrder, OrderService
+from .models import Order, UserOrder
+from .help_model import OrderService
 from django.forms import inlineformset_factory
 
 

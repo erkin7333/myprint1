@@ -83,16 +83,8 @@ def gift_product(request):
     return render(request, 'main/gifts-products.html')
 
 
-def printing_large(request):
-    return render(request, 'main/printing-largeformat.html')
-
-
 def promotional_products(request):
     return render(request, 'main/promotional-products.html')
-
-
-def markirovka(request):
-    return render(request, 'main/markirovka.html')
 
 
 def poligraphy_product(request, pk):
@@ -103,17 +95,6 @@ def poligraphy_product(request, pk):
     }
     return render(request, 'main/poligraphy-products.html', context=context)
 
-
-def printing_paper(request):
-    return render(request, 'main/printing-paper.html')
-
-
-def printing_textile(request):
-    return render(request, 'main/printing-textile.html')
-
-
-def textile_products(request):
-    return render(request, 'main/textile-products.html')
 
 
 def aboutview(request):

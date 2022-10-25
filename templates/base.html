@@ -111,10 +111,11 @@
                                         haqida</a></li>
                                     <li><a href="#!">УСЛУГИ</a>
                                         <ul class="dropdown">
-                                            {% for col in servicecategory %}
-                                            <li style="list-style-type: none;"><a href="{% url 'myprint:type_service' col.pk %}">{{ col.name_uz }}</a>
-                                            </li>
-                                            {% endfor%}
+                                            <li style="list-style-type: none;"><a href="{% url 'myprint:designe' %}">Dizayn</a></li>
+                                            <li style="list-style-type: none;"><a href="{% url 'myprint:printing_paper' %}">Raqamli bosib chiqarish</a></li>
+                                            <li style="list-style-type: none;"><a href="{% url 'myprint:printing_large' %}">Katta formatli chop etish</a></li>
+                                            <li style="list-style-type: none;"><a href="{% url 'myprint:printing_textile' %}">To'qimachilik bosib chiqarish</a></li>
+                                            <li style="list-style-type: none;"><a href="{% url 'myprint:markirovka' %}">Lazer markalash</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="#!">ПРОДУКЦИЯ</a>
