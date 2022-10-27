@@ -60,14 +60,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return super(User, self).save(*args, **kwargs)
 
 
-# Banner
-class Banner(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
-
-    def __str__(self):
-        return self.name_uz
-
 
 # detail product
 class InfoProduct(models.Model):
@@ -80,8 +72,7 @@ class InfoProduct(models.Model):
 
 class Category(models.Model):
     parent = models.ForeignKey("Category", on_delete=models.CASCADE, null=True, blank=True, default=None)
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
+    name = models.CharField(_('name'), max_length=65)
     image = models.ImageField(_('image'), upload_to='media/category_image', blank=True, null=True)
 
 
@@ -90,7 +81,7 @@ class Category(models.Model):
         return Category.objects.filter(parent=self)
 
     def __str__(self):
-        return self.name_uz
+        return self.name
 
     class Meta:
         verbose_name = "Kategoriya"
@@ -98,18 +89,15 @@ class Category(models.Model):
 
 # Product
 class Product(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
+    name = models.CharField(_('name'), max_length=65)
     image = models.ImageField(_('image'), upload_to='media/product')
     info_product = models.ForeignKey(InfoProduct, on_delete=models.CASCADE, blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, blank=True, null=True)
     vendor_code = models.CharField(max_length=20)
-    description_uz = models.TextField(_('description'))
-    description_ru = models.TextField(_('description'))
+    description = models.TextField(_('description'))
 
     def __str__(self):
-        return self.name_uz
-
+        return self.name
     class Meta:
         verbose_name = "Maxsulot"
         verbose_name_plural = "Maxsulotlar"
@@ -138,133 +126,52 @@ class Settings(models.Model):
 
 #  About model
 class About(models.Model):
-    description_uz = models.TextField(blank=True, null=True)
-    description_ru = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     def __str__(self):
-        return self.description_uz
+        return self.description
 
     class Meta:
         verbose_name = "Biz Haqimizda"
 
 # About uchun rasmlar turadigan model
 class AboutImage(models.Model):
-    name_uz = models.CharField(max_length=60, blank=True, null=True)
-    name_ru = models.CharField(max_length=60, blank=True, null=True)
+    name = models.CharField(max_length=60, blank=True, null=True)
     image = models.ImageField(upload_to='media/about', blank=True, null=True)
     def __str__(self):
-        return self.name_uz
+        return self.name
 
-# печать.
-class Printer(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
-    description_uz = models.TextField(_('description'))
-    description_ru = models.TextField(_('description'))
-    image = models.ImageField(_('image'), upload_to='media/printer')
-
-    def __str__(self):
-        return self.name_uz
 
 
 # Reklama , Poligrafia, Suviner
 class TypeService(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
+    name = models.CharField(_('name'), max_length=65)
     image = models.ImageField(upload_to="media/typeserveis")
 
     def __str__(self) -> str:
-        return self.name_uz
+        return self.name
     class Meta:
         verbose_name = "Xizmat turi"
 
 
 class MenuService(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
+    name = models.CharField(_('name'), max_length=65)
     image = models.ImageField(_('image'), upload_to='media/menuservice')
     type_service = models.ForeignKey(TypeService, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self) -> str:
-        return self.name_uz
+        return self.name
 
     class Meta:
         verbose_name = "Menyu Xizmati"
 
 
-# Mы предлагаем
-class Tariff(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
-
-    def __str__(self) -> str:
-        return self.name_uz
-
-
-class MenuTariff(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
-    image = models.ImageField(_('image'), upload_to='media/imagesTariff')
-    tariff = models.ForeignKey(Tariff, on_delete=models.CASCADE, blank=True, null=True)
-
-    def __str__(self) -> str:
-        return self.name_uz
-
-
-class CEO(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
-    image = models.ImageField(_('image'), upload_to='media/ceo')
-    number = models.IntegerField(_('number'), )
-    description_uz = models.TextField(_('description'))
-    description_ru = models.TextField(_('description'))
-
-    def __str__(self) -> str:
-        return self.name_uz
 
 
 class Sponsors(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
     image = models.ImageField(_('image'), upload_to='media/sponsor')
 
     def __str__(self) -> str:
-        return self.name_uz
-
-
-class Contact(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
-    number = models.IntegerField(_('number'))
-    info_uz = models.CharField(_('info'), max_length=65)
-    info_ru = models.CharField(_('info'), max_length=65)
-    description_uz = models.TextField(_('description'))
-    description_ru = models.TextField(_('description'))
-    image = models.ImageField(_('image'), upload_to='media/contact')
-
-    def __str__(self) -> str:
-        return self.name_uz
-
-
-# Наши работы.
-class Portfolio(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
-    image = models.ImageField(_('image'), upload_to='media/portfolio')
-
-    # data_create = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self) -> str:
-        return self.name_uz
-
-
-class SocialMedia(models.Model):
-    name_uz = models.CharField(_('name'), max_length=65)
-    name_ru = models.CharField(_('name'), max_length=65)
-    number = models.IntegerField(_('number'))
-    image = models.ImageField(_('image'), upload_to='media/social_media')
-
-    def __str__(self) -> str:
-        return self.name_uz
+        return str(self.image)
 
 
 class UserOrder(models.Model):

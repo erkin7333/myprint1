@@ -1,27 +1,19 @@
 from django.contrib import admin
-from django_admin_listfilter_dropdown.filters import (
-    DropdownFilter, ChoiceDropdownFilter, RelatedDropdownFilter
-)
 from .models import *
-from django.utils.html import format_html
 from .help_model import Image, Designe, DigitalPrint, TextPrint, LaserPrint, LargeFormat, Type, OrderService
-
+from modeltranslation.admin import TranslationAdmin
 
 # Register your models here.
-class ProductAdmin(admin.ModelAdmin):
+@admin.register(Product)
+class ProductAdmin(TranslationAdmin):
     list_display = [
-        'category', 'name_uz', 'name_ru', 'image', 'info_product',
-        'vendor_code', 'description_uz', 'description_ru'
+        'category', 'name', 'image', 'info_product',
+        'vendor_code', 'description'
     ]
     list_display_links = [
-        'category', 'name_uz', 'name_ru'
+        'category', 'name'
     ]
     list_per_page = 2
-    class Meta:
-        model = Product
-
-
-admin.site.register(Product, ProductAdmin)
 
 
 class OrderAdmin(admin.TabularInline):
@@ -39,22 +31,18 @@ admin.site.register(UserOrder, UserOrderAdmin)
 admin.site.register(Order)
 
 
-class CategoryAdmin(admin.ModelAdmin):
+@admin.register(Category)
+class CategoryAdmin(TranslationAdmin):
     fields = [
-        'parent', 'name_uz', 'name_ru', 'image'
+        'parent', 'name' 'image'
     ]
     list_display = [
-        'id', 'parent', 'name_uz', 'name_ru', 'image'
+        'id', 'parent', 'name' 'image'
     ]
     list_display_links = [
-        'parent', 'name_uz', 'name_ru',
+        'parent', 'name',
     ]
     list_per_page = 2
-    class Meta:
-        model = Category
-
-
-admin.site.register(Category, CategoryAdmin)
 
 
 class SettingsAdmin(admin.ModelAdmin):
@@ -70,66 +58,52 @@ class SettingsAdmin(admin.ModelAdmin):
 admin.site.register(Settings, SettingsAdmin)
 
 
-class TypeServiceAdmin(admin.ModelAdmin):
+@admin.register(TypeService)
+class TypeServiceAdmin(TranslationAdmin):
     list_display = [
-        'name_uz', 'name_ru', 'image'
+        'name', 'image'
     ]
     list_display_links = [
-        'name_uz', 'name_ru'
+        'name'
     ]
     list_per_page = 2
-    class Meta:
-        model = TypeService
 
 
-admin.site.register(TypeService, TypeServiceAdmin)
 
+@admin.register(MenuService)
 class MenuServiceAdmin(admin.ModelAdmin):
     list_display = [
-        'name_uz', 'name_ru', 'image',
+        'name', 'image',
         'type_service'
     ]
     list_display_links = [
-        'name_uz', 'name_ru'
+        'name'
     ]
     list_per_page = 2
 
-    class Meta:
-        model = MenuService
 
 
-admin.site.register(MenuService, MenuServiceAdmin)
-
-
-class AboutAdmin(admin.ModelAdmin):
+@admin.register(About)
+class AboutAdmin(TranslationAdmin):
     list_display = [
-        "description_uz", "description_ru",
+        "description"
     ]
     list_display_links = [
-        "description_uz", "description_ru",
+        "description"
     ]
     list_per_page = 2
-    class Meta:
-        model = About
 
 
-admin.site.register(About, AboutAdmin)
-
-
-class AboutImageAdmin(admin.ModelAdmin):
+@admin.register(AboutImage)
+class AboutImageAdmin(TranslationAdmin):
     list_display = [
-        "name_uz", "name_ru", "image"
+        "name", "image"
     ]
     list_display_links = [
-        "name_uz", "name_ru"
+        "name",
     ]
     list_per_page = 2
 
-    class Meta:
-        model = AboutImage
-
-
-admin.site.register(AboutImage, AboutImageAdmin)
 
 
 class OrderServiceAdmin(admin.ModelAdmin):
@@ -147,12 +121,13 @@ class OrderServiceAdmin(admin.ModelAdmin):
 
 admin.site.register(OrderService, OrderServiceAdmin)
 
-class TypeAdmin(admin.ModelAdmin):
+
+@admin.register(Type)
+class TypeAdmin(TranslationAdmin):
     list_display = ['name']
     list_display_links = ['name']
-    class Model:
-        model = Type
-admin.site.register(Type, TypeAdmin)
+
+
 
 class ImageAdmin(admin.ModelAdmin):
     list_display = [
@@ -168,64 +143,48 @@ class ImageAdmin(admin.ModelAdmin):
 
 admin.site.register(Image, ImageAdmin)
 
-class DesigneAdmin(admin.ModelAdmin):
+
+@admin.register(Designe)
+class DesigneAdmin(TranslationAdmin):
     list_display = [
         'description',
         'image1', 'image2', 'image3'
     ]
     list_display_links = ['description']
 
-    class Meta:
-        model = Designe
 
-admin.site.register(Designe, DesigneAdmin)
-
-
-class DigitalPrintAdmin(admin.ModelAdmin):
+@admin.register(DigitalPrint)
+class DigitalPrintAdmin(TranslationAdmin):
     list_display = [
         'description', 'size',
         'type', 'on_site_print', 'double_site_print', 'image'
     ]
     list_display_links = ['size', 'type']
 
-    class Meta:
-        model = DigitalPrint
-
-admin.site.register(DigitalPrint, DigitalPrintAdmin)
 
 
-class LargeFormatAdmin(admin.ModelAdmin):
+@admin.register(LargeFormat)
+class LargeFormatAdmin(TranslationAdmin):
     list_display = [
        'description', 'product_name',
         'type', 'price', 'image1', 'image2', 'image3'
     ]
     list_display_links = ['product_name']
 
-    class Meta:
-        model = LargeFormat
 
-admin.site.register(LargeFormat, LargeFormatAdmin)
-
-class TextPrintAdmin(admin.ModelAdmin):
+@admin.register(TextPrint)
+class TextPrintAdmin(TranslationAdmin):
     list_display = [
         'size', 'price',
         'description', 'image'
     ]
     list_display_links = ['size', 'price']
 
-    class Meta:
-        model = TextPrint
 
-admin.site.register(TextPrint, TextPrintAdmin)
-
-class LaserPrintAdmin(admin.ModelAdmin):
+@admin.register(LaserPrint)
+class LaserPrintAdmin(TranslationAdmin):
     list_display = [
         'size', 'price',
         'description', 'image'
     ]
     list_display_links = ['size', 'price']
-
-    class Meta:
-        model = LaserPrint
-
-admin.site.register(LaserPrint, LaserPrintAdmin)

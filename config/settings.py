@@ -35,6 +35,7 @@ AUTH_USER_MODEL = 'myprint.User'
 
 INSTALLED_APPS = [
     'jazzmin',
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,11 +127,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-EN'
 LANGUAGES = (
-    ('en', _('English')),
-    ('ru', _('Russian')),
     ('uz', _('Uzbek')),
+    ('ru', _('Russian')),
 )
-
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'ru'
 TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
