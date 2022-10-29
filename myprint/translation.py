@@ -6,7 +6,7 @@ from .help_model import (Designe, DigitalPrint, LargeFormat, TextPrint,
 
 @register(Category)
 class CategoryTranslationOptions(TranslationOptions):
-    fields = ('name', 'parent')
+    fields = ('name',)
 
 
 @register(Product)

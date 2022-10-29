@@ -3,9 +3,6 @@
 {% load static %}
 
 {% block content %}
-
-
-
     <section class="console-container"
              style="background-image: url({% static 'img/bg/full.jpg' %}); background-size: cover;">
         <div class="container pt-5 pb-5">
@@ -24,7 +21,7 @@
                 <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 border pl-0 pr-0">
                     <div class="p-2 text-center">
                         <div class="border bgSecondary shadow-lg" style="padding: 5px 0px 1px 0px;"><h5
-                                class="font-weight-bold">{{ request.allcategory.name_uz }}</h5></div>
+                                class="font-weight-bold"></h5></div>
                     </div>
                     {% for par in allcategory %}
                         {% for child in par.children %}
@@ -34,7 +31,7 @@
                                     <div class="pt-3 pb-1 pl-3 borderDashedBottom"><h6><img src="{{ child.image.url }}"
                                                                                             width="20"
                                                                                             alt="category-title-icon"
-                                                                                            class="mr-1">{{ child.name_uz }}
+                                                                                            class="mr-1">{{ child.name }}
                                     </h6>
                                     </div>
                                 </a>
@@ -105,30 +102,34 @@
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                                                        <img src="{% static 'img/product/c1.png' %}" width="100%"
+                                                        <img src="{{ pro.image.url }}" width="100%"
                                                              alt="">
                                                     </div>
-                                                    <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-9 pt-4">
-                                                        <table>
-                                                            <thead>
-                                                            <tr>
-                                                                <th scope="col">Nomi</th>
-                                                                <th scope="col">Masulot turi</th>
-                                                                <th scope="col">Asosi</th>
-                                                                <th scope="col">Minimal buyurtma</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr>
-                                                                <td scope="row"
-                                                                    data-label="Размер бумага">{{ pro.name_uz }}
-                                                                </td>
-                                                                <td data-label="Тип бумага">{{ pro.category }}</td>
-                                                                <td data-label="Тип бумага">{{ pro.vendor_code }}</td>
-                                                                <td data-label="Тип бумага">{{ pro.description }}</td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
+                                                    <table>
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Nomi</th>
+                                                            <th>Masulot turi</th>
+                                                            <th>Sotuvchi kodi</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                {{ pro.name }}
+                                                            </td>
+                                                            <td>
+                                                                {{ pro.category }}
+                                                            </td>
+                                                            <td>
+                                                                {{ pro.vendor_code }}
+                                                            </td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- Scrollable modal -->
+                                                    <div class="modal-dialog modal-dialog-scrollable">
+                                                        {{ pro.description }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -166,6 +167,4 @@
             </div>
         </div>
     </section>
-
-
 {% endblock content %}

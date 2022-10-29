@@ -33,11 +33,8 @@ admin.site.register(Order)
 
 @admin.register(Category)
 class CategoryAdmin(TranslationAdmin):
-    fields = [
-        'parent', 'name' 'image'
-    ]
     list_display = [
-        'id', 'parent', 'name' 'image'
+        'id', 'parent', 'name', 'image'
     ]
     list_display_links = [
         'parent', 'name',
