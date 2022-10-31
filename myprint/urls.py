@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('portfolio/', portfolio, name='portfolio'),
 
-    path('gift_product/', gift_product, name='gift_product'),
+    path('gift_product/<int:id>/', gift_product, name='gift_product'),
 
     path('designe/', designe, name='designe'),
 
@@ -41,5 +41,6 @@ urlpatterns = [
 
     path('list/', list_data, name='list'),
 
-    path('typeimage/<int:pk>/', typeimage, name='typeimage')
+    path('typeimage/<int:pk>/', typeimage, name='typeimage'),
+
 ]

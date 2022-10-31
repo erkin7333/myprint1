@@ -79,8 +79,14 @@ def contact(request):
     return render(request, 'main/contact.html')
 
 
-def gift_product(request):
-    return render(request, 'main/gifts-products.html')
+def gift_product(request, id):
+    product = Product.objects.filter(category__parent_id=id)
+    print("Product Child -------------- >>>>>", product)
+    context = {
+        'product': product,
+        'id': id
+    }
+    return render(request, 'main/gifts-products.html', context=context)
 
 
 def promotional_products(request):
