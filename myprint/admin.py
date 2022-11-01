@@ -13,6 +13,7 @@ class ProductAdmin(TranslationAdmin):
     list_display_links = [
         'category', 'name'
     ]
+    search_fields = ['vendor_code', 'name']
     list_per_page = 2
 
 
@@ -185,3 +186,16 @@ class LaserPrintAdmin(TranslationAdmin):
         'description', 'image'
     ]
     list_display_links = ['size', 'price']
+
+
+class ProductOrderAdmin(admin.ModelAdmin):
+    list_display = [
+        'name', 'vendor_code', 'phone', 'creat_add'
+    ]
+    list_display_links = [
+        'name', 'vendor_code',
+    ]
+    class Meta:
+        model = Product_Orders
+
+admin.site.register(Product_Orders, ProductOrderAdmin)

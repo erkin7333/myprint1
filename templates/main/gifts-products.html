@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-
-{% load static help %}
-
+{% load static %}
 
 {% block content %}
     <section class="container-fluid pl-0 pr-0">
@@ -64,7 +62,7 @@
                         {% for col in product %}
                             <div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-4 p-2">
                                 <div class="card p-3 bg-transparent">
-                                    <a href="#!" data-toggle="modal" data-target="#productmodal">
+                                    <a href="id{{ col.id }}" data-toggle="modal" data-target="#id{{ col.id }}">
                                         <img src="{{ col.image.url }}" width="100%" height="200"
                                              alt="">
                                         <h6 class="font-weight-normal small text-dark text-left p-2 borderDashedBottom"
@@ -139,27 +137,16 @@
                                             </button>
                                         </div>
                                         <div class="modal-body pt-2 pb-5 text-center">
-                                            <h6>Наш менеджер свяжется с вами в самое ближайшее время!</h6>
-                                            <input type="text" class="form-control mt-4 mb-3" name="" id=""
-                                                   aria-describedby=""
-                                                   placeholder="Имя...">
-                                            <div class="input-group">
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text" id="basic-addon1">ПП</span>
+                                            <h6>Bizning menejerimiz imkon qadar tezroq siz bilan bog'lanadi!</h6>
+                                            <form action="" method="POST">
+                                                {% csrf_token %}
+                                                {{ form.name }}
+                                                {{ form.vendor_code }}
+                                                {{ form.phone }}
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success btn-sm">So'rov qoldiring</button>
                                                 </div>
-                                                <input type="tel" class="form-control" id="id" name="id" maxlength="4"
-                                                       placeholder="Продукт aртикул..." aria-describedby="basic-addon1"
-                                                       pattern="[0-9]{4}"
-                                                       value="">
-                                            </div>
-                                            <input type="tel" class="form-control mt-3" id="phone" name="phone"
-                                                   maxlength="13"
-                                                   placeholder="Телефон..." pattern="+998-[0-9]{2}-[0-9]{3}-[0-9]{4}"
-                                                   value="+998">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-success btn-sm">Оставьте заявку
-                                            </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

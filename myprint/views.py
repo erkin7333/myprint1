@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import *
 from .models import UserOrder, Order
-from .forms import UserOrderForm, OrderForm, OrderServiceForm
+from .forms import UserOrderForm, OrderForm, OrderServiceForm, Product_OrdersForm
 from django.shortcuts import redirect
 from django.forms import modelformset_factory
 from django.core.paginator import Paginator
@@ -81,9 +81,17 @@ def contact(request):
 
 def gift_product(request, id):
     product = Product.objects.filter(category__parent_id=id)
-    print("Product Child -------------- >>>>>", product)
+    form = Product_OrdersForm()
+    if request.method == 'POST':
+        form = Product_OrdersForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('myprint:home')
+        else:
+            form = Product_OrdersForm()
     context = {
         'product': product,
+        'form': form,
         'id': id
     }
     return render(request, 'main/gifts-products.html', context=context)
@@ -95,8 +103,17 @@ def promotional_products(request):
 
 def poligraphy_product(request, pk):
     product = Product.objects.filter(category_id=pk)
+    form = Product_OrdersForm()
+    if request.method == 'POST':
+        form = Product_OrdersForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('myprint:home')
+        else:
+            form = Product_OrdersForm()
     context = {
         "product": product,
+        'form': form,
         'pk': pk
     }
     return render(request, 'main/poligraphy-products.html', context=context)

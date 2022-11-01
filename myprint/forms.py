@@ -1,5 +1,5 @@
 from django import forms
-from .models import Order, UserOrder
+from .models import Order, UserOrder, Product_Orders
 from .help_model import OrderService
 from django.forms import inlineformset_factory
 
@@ -56,6 +56,30 @@ class OrderServiceForm(forms.ModelForm):
                 'placeholder': 'Имя...'
             }),
             'phone_number': forms.NumberInput(attrs={
+                'class': 'form-control mt-3',
+                'maxlength': '13',
+                'placeholder': 'Телефон...',
+                'value': '+998'
+            })
+        }
+
+
+class Product_OrdersForm(forms.ModelForm):
+    class Meta:
+        model = Product_Orders
+        exclude = ['creat_add']
+
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control mt-4',
+                'placeholder': 'Nomi...'
+            }),
+            'vendor_code': forms.TextInput(attrs={
+                'class': 'form-control mt-3',
+                'maxlength': '13',
+                'placeholder': 'Maxsulod kodi...',
+            }),
+            'phone': forms.NumberInput(attrs={
                 'class': 'form-control mt-3',
                 'maxlength': '13',
                 'placeholder': 'Телефон...',

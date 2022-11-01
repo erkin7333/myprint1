@@ -139,8 +139,12 @@
                                         <div class="modal-body pt-2 pb-5 text-center">
                                             <h6>Bizning menejerimiz imkon qadar tezroq siz bilan bog'lanadi!</h6>
                                             <form action="" method="POST">
+                                                {% csrf_token %}
+                                                {{ form.name }}
+                                                {{ form.vendor_code }}
+                                                {{ form.phone }}
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-success btn-sm">So'rov
+                                                    <button type="submit" class="btn btn-success btn-sm">So'rov
                                                         qoldiring
                                                     </button>
                                                 </div>

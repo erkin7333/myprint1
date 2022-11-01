@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
-from datetime import datetime
+from django.utils import timezone
 
 
 class MyUserManager(BaseUserManager):
@@ -107,9 +107,10 @@ class Product_Orders(models.Model):
     name = models.CharField(max_length=50)
     vendor_code = models.CharField(max_length=50)
     phone = models.CharField(max_length=14)
+    creat_add = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return f"{self.name} {self.vendor_code} {self.phone}"
+        return self.name
 
     class Meta:
         verbose_name = "Maxsulot zakazi"
