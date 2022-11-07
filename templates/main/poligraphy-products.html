@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load help %}
 
 {% block content %}
     <section class="container-fluid pl-0 pr-0">
@@ -11,11 +12,10 @@
                         <div class="border bgSecondary shadow-lg" style="padding: 5px 0px 1px 0px;"><h5
                                 class="font-weight-bold"></h5></div>
                     </div>
-                    {% for par in allcategory %}
-                        {% for child in par.children %}
-                            {% if par.id == pk %}
-                                <a href="{% url 'myprint:gift_product' par.id %}">
-
+                    {% for category in categories %}
+                        {% for child in categoriy_children|get_item:category.id %}
+                            {% if category.id == pk %}
+                                <a href="{% url 'myprint:parent_product' child.id %}">
                                     <div class="pt-3 pb-1 pl-3 borderDashedBottom"><h6><img src="{{ child.image.url }}"
                                                                                             width="20"
                                                                                             alt="category-title-icon"

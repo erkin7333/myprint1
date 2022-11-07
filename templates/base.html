@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 {% load i18n %}
 {% get_available_languages as languages %}
+{% get_current_language as LANGUAGE_CODE %}
 <html>
 
 <!-- Mirrored from myprint.uz/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Oct 2022 05:18:16 GMT -->
@@ -10,7 +11,7 @@
     <title>myprint.uz</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/png">
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'fontawesomePremium/css/all.css' %}">
     <link rel="stylesheet" href="{% static 'css/slick.css' %}">
 
@@ -66,7 +67,6 @@
 <div class="page-loader">
     <div class="spinner"></div>
 </div>
-
 <header class="header shop">
     <div class="topbar">
         <div class="container">
@@ -92,7 +92,25 @@
                                     src="{% static 'img/icons/phonesvg.svg' %}" width="25" class="mr-2 ml-2" height="30"
                                     alt="">{{ phone }}</a>
                             </li>
-
+                            <li class="pl-1 pr-1 pb-1 mb-0 border-0 font-weight-normal">
+                                {% for lang_code, lang_name in languages %}
+                                    {% language lang_code %}
+                                        <button type="button" class="btn btn-light"><a
+                                                href="/{{ lang_code }}">{{ lang_name }}</a></button>
+                                    {% endlanguage %}
+                                {% endfor %}
+                            </li>
+                            <li class="pl-1 pr-1 pb-1 mb-0 border-0 font-weight-normal">
+                                {% if user.is_authenticated %}
+                                <button type="button" class="btn btn-light">
+                                    <a href="{% url 'accounts:logout' %}">Logout</a>
+                                </button>
+                                {% else %}
+                                <button type="button" class="btn btn-light">
+                                    <a href="{% url 'accounts:login' %}">Login</a>
+                                </button>
+                                {% endif %}
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -131,7 +149,7 @@
                                     <li><a href="#!">ПРОДУКЦИЯ</a>
                                         <ul class="dropdown">
                                             <li style="list-style-type: none;">
-                                                {% for row in allcategory %}
+                                                {% for row in categories %}
                                                     <a href="{% url 'myprint:poligraphy_product' row.pk %}">{{ row.name }}</a>
                                                 {% endfor %}
                                             </li>
@@ -141,23 +159,10 @@
                                     <li><a href="{% url 'myprint:contact' %}">КОНТАКТЫ</a></li>
                                     {% if user.is_authenticated %}
                                         <li><a href="{% url 'myprint:create' %}">Create</a></li>
-                                        <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
+
                                     {% else %}
-                                        <li><a href="{% url 'accounts:login' %}">Login</a></li>
+
                                     {% endif %}
-                                    <li><a href="#!">TIL</a>
-                                        <ul class="dropdown">
-                                            <li style="list-style-type: none;">
-                                                {% for lang_code, lang_name in languages %}
-                                                    {% language lang_code %}
-                                                        <li style="list-style-type: none;">
-                                                            <a href="/{{ lang_code }}">{{ lang_name }}</a>
-                                                        </li>
-                                                    {% endlanguage %}
-                                                {% endfor %}
-                                            </li>
-                                        </ul>
-                                    </li>
                                 </ul>
                             </div>
 

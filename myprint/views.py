@@ -79,8 +79,9 @@ def contact(request):
     return render(request, 'main/contact.html')
 
 
-def gift_product(request, id):
+def parent_product(request, id):
     product = Product.objects.filter(category__parent_id=id)
+    print("Parent Filter--------------->>>>>>>>>>>>", product)
     form = Product_OrdersForm()
     if request.method == 'POST':
         form = Product_OrdersForm(request.POST)

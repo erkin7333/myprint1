@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('portfolio/', portfolio, name='portfolio'),
 
-    path('gift_product/<int:id>/', gift_product, name='gift_product'),
+    path('parent_product/<int:id>/', parent_product, name='parent_product'),
 
     path('designe/', designe, name='designe'),
 

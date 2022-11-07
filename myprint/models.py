@@ -76,9 +76,9 @@ class Category(models.Model):
     image = models.ImageField(_('image'), upload_to='media/category_image', blank=True, null=True)
 
 
-    @property
-    def children(self):
-        return Category.objects.filter(parent=self)
+    # @property
+    # def children(self):
+    #     return Category.objects.filter(parent=self)
 
     def __str__(self):
         return self.name
