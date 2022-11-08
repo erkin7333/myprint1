@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from django.db import transaction, IntegrityError
 
 
+
 def create(request):
     context = {}
     OrdersFormSet = modelformset_factory(Order, form=OrderForm)
@@ -103,6 +104,7 @@ def promotional_products(request):
 
 
 def poligraphy_product(request, pk):
+    meta_d = get_object_or_404(MetaDescription, category_id=pk)
     product = Product.objects.filter(category_id=pk)
     form = Product_OrdersForm()
     if request.method == 'POST':
@@ -114,6 +116,7 @@ def poligraphy_product(request, pk):
             form = Product_OrdersForm()
     context = {
         "product": product,
+        'meta_d': meta_d,
         'form': form,
         'pk': pk
     }

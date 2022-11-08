@@ -199,3 +199,16 @@ class ProductOrderAdmin(admin.ModelAdmin):
         model = Product_Orders
 
 admin.site.register(Product_Orders, ProductOrderAdmin)
+
+
+
+class MetaDescriptionAdmin(admin.ModelAdmin):
+    list_display = [
+        'category', 'name', 'description'
+    ]
+    list_display_links = [
+        'category', 'name',
+    ]
+    class Meta:
+        model = MetaDescription
+admin.site.register(MetaDescription, MetaDescriptionAdmin)

@@ -69,6 +69,15 @@ class InfoProduct(models.Model):
     def __str__(self):
         return self.size
 
+class MetaDescription(models.Model):
+    category = models.ForeignKey("Category", on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    def __str__(self):
+        return str(self.category)
+
+    class Meta:
+        verbose_name = "Meta Tavsifilar"
 
 class Category(models.Model):
     parent = models.ForeignKey("Category", on_delete=models.CASCADE, null=True, blank=True, default=None)

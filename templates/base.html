@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 {% load i18n %}
+{% load metahelp %}
 {% get_available_languages as languages %}
 {% get_current_language as LANGUAGE_CODE %}
 <html>
@@ -9,7 +10,9 @@
 <head>
     <meta charset="utf-8">
     <title>myprint.uz</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block meta_description %}
+        <meta name="keywords" content="">
+    {% endblock %}
     <link rel="shortcut icon" href="{% static 'img/favicon.png' %}" type="image/png">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}"/>
     <link rel="stylesheet" href="{% static 'fontawesomePremium/css/all.css' %}">
@@ -102,13 +105,13 @@
                             </li>
                             <li class="pl-1 pr-1 pb-1 mb-0 border-0 font-weight-normal">
                                 {% if user.is_authenticated %}
-                                <button type="button" class="btn btn-light">
-                                    <a href="{% url 'accounts:logout' %}">Logout</a>
-                                </button>
+                                    <button type="button" class="btn btn-light">
+                                        <a href="{% url 'accounts:logout' %}">Logout</a>
+                                    </button>
                                 {% else %}
-                                <button type="button" class="btn btn-light">
-                                    <a href="{% url 'accounts:login' %}">Login</a>
-                                </button>
+                                    <button type="button" class="btn btn-light">
+                                        <a href="{% url 'accounts:login' %}">Login</a>
+                                    </button>
                                 {% endif %}
                             </li>
                         </ul>
@@ -159,13 +162,9 @@
                                     <li><a href="{% url 'myprint:contact' %}">КОНТАКТЫ</a></li>
                                     {% if user.is_authenticated %}
                                         <li><a href="{% url 'myprint:create' %}">Create</a></li>
-
-                                    {% else %}
-
                                     {% endif %}
                                 </ul>
                             </div>
-
                         </div>
                     </nav>
 

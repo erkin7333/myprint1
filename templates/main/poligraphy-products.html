@@ -3,6 +3,9 @@
 {% load static %}
 {% load help %}
 
+{% block meta_description %}
+    <meta name="keywords" content="{{ meta_d.description }}">
+{% endblock %}
 {% block content %}
     <section class="container-fluid pl-0 pr-0">
         <div class="container pb-5 pt-5">
